@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1Qaz2wsx
+      POSTGRES_DB: CleanArchitectureDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_server
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: duydn.dev@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 1Qaz2wsx
+    ports:
+      - "5433:80"
+    depends_on:
+      - postgres
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  postgres_data:
